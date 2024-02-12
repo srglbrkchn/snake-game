@@ -7,7 +7,8 @@ SPEED = 50
 SPACE_SIZE = 50
 BODY_PARTS = 3
 SNAKE_COLOR = "#00FF00"
-
+FOOD_COLOR = "#FF0000"
+BACKGROUND_COLOR = "#000000"
 
 class Snake:
     pass
@@ -27,4 +28,33 @@ def check_collisions():
 def gam_over():
     pass
 
+window = Tk()
+window.title("Snake Game 🐍")
+# window.geometry(f"{GAME_WIDTH}x{GAME_HEIGHT}")
+window.resizable(False, False)
 
+score = 0
+direction = "down"
+
+label = Label(window, text="Score: {}".format(score), font=("Bradley Hand", 40))
+label.pack()
+canvas = Canvas(window, bg=BACKGROUND_COLOR, height=GAME_HEIGHT, width=GAME_WIDTH)
+canvas.pack()
+
+window.update()
+
+window_width = window.winfo_width()
+window_height = window.winfo_height()
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
+
+x =int((screen_width/2) - (GAME_WIDTH/2))
+y =int((screen_height/2) - (GAME_HEIGHT/2))
+
+window.geometry(f"{GAME_WIDTH}x{GAME_HEIGHT}+{x}+{0}")
+
+snake = Snake()
+food = Food()
+
+
+window.mainloop()
