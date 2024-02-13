@@ -25,8 +25,8 @@ class Snake:
 
 class Food:
     def __init__(self):
-        x = random.randint(0, int((GAME_WIDTH/SPACE_SIZE)-2)) * SPACE_SIZE
-        y = random.randint(0, int((GAME_HEIGHT/SPACE_SIZE)-2)) * SPACE_SIZE
+        x = random.randint(0, int((GAME_WIDTH/SPACE_SIZE)-10)) * SPACE_SIZE
+        y = random.randint(0, int((GAME_HEIGHT/SPACE_SIZE)-10)) * SPACE_SIZE
 
         self.coordinates = [x,y]
         canvas.create_rectangle(x, y, x+SPACE_SIZE, y+SPACE_SIZE, fill=FOOD_COLOR, outline=FOOD_COLOR, tag="food")
@@ -78,15 +78,24 @@ def change_direction(new_direction):
         if direction != "up":
             direction = new_direction
 
-def check_collisions():
-    pass
-
+def check_collisions(snake):
+    x, y = snake.coordinates[0]
+    if x < 0 or x >= (canvas.winfo_width() - SPACE_SIZE):
+        print("Game Over!")
+        return True
+    elif y < 0 or y>=(canvas.winfo_height() - SPACE_SIZE):
+        print("Game Over!")
+        return True
+    for body_part in snake.coordinates[1:]:
+        if x == body_part[0] and y == body_part[1]:
+            print("Game Over!")
+            return True
+    return False
 def gam_over():
     pass
 
 window = Tk()
 window.title("Snake Game 🐍")
-# window.geometry(f"{GAME_WIDTH}x{GAME_HEIGHT}")
 window.resizable(False, False)
 
 score = 0
@@ -95,7 +104,7 @@ direction = "down"
 label = Label(window, text="Score: {}".format(score), font=("Bradley Hand", 40))
 label.pack()
 canvas = Canvas(window, bg=BACKGROUND_COLOR, height=GAME_HEIGHT, width=GAME_WIDTH)
-canvas.pack()
+canvas.pack(fill=BOTH, expand=True)
 
 window.update()
 
