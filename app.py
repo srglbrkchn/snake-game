@@ -1,11 +1,11 @@
 from tkinter import *
 import random
 
-GAME_WIDTH = 700
+GAME_WIDTH = 1000
 GAME_HEIGHT = 700
 SPEED = 200
-SPACE_SIZE = 50
-BODY_PARTS = 3
+SPACE_SIZE = 25
+BODY_PARTS = 1
 SNAKE_COLOR = "#00FF00"
 FOOD_COLOR = "#FF0000"
 BACKGROUND_COLOR = "#000000"
@@ -81,18 +81,17 @@ def change_direction(new_direction):
 def check_collisions(snake):
     x, y = snake.coordinates[0]
     if x < 0 or x >= (canvas.winfo_width() - SPACE_SIZE):
-        print("Game Over!")
         return True
     elif y < 0 or y>=(canvas.winfo_height() - SPACE_SIZE):
-        print("Game Over!")
         return True
     for body_part in snake.coordinates[1:]:
         if x == body_part[0] and y == body_part[1]:
-            print("Game Over!")
             return True
     return False
 def gam_over():
-    pass
+    canvas.delete(ALL)
+    canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/2, font=("Bradley Hand", 70),
+                       text="GAME OVER", fill="red", tag="gameover")
 
 window = Tk()
 window.title("Snake Game 🐍")
